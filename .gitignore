@@ -1,0 +1,32 @@
+# Конфигурационные файлы с секретами
+.env.local
+.env.production
+
+# Конфигурация WireGuard (содержит приватные ключи!)
+config/
+
+# Apache credentials
+.htpasswd*
+
+# Логи
+*.log
+
+# Бэкапы
+*.tar.gz
+*.zip
+backup/
+
+# Временные файлы
+*.tmp
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.sublime-*
