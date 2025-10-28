@@ -69,43 +69,37 @@ bash "$SCRIPTS_DIR/setup_system.sh"
 echo ""
 bash "$SCRIPTS_DIR/deploy_vpn.sh"
 
-# 6. Настройка Apache
-echo ""
-bash "$SCRIPTS_DIR/setup_apache.sh"
-
-# 7. Финальная проверка
+# 6. Финальная проверка
 echo ""
 echo "========================================"
 echo "Финальная проверка"
 echo "========================================"
 
 echo "→ Проверка Docker контейнера..."
-docker ps | grep wg-easy
+docker ps | grep wireguard
 
 echo ""
 echo "→ Проверка порта WireGuard..."
 sudo ss -lunp | grep 51820 || echo "⚠ Порт 51820 не прослушивается"
 
 echo ""
-echo "→ Проверка веб-панели..."
-curl -I http://127.0.0.1:51821 2>/dev/null | head -n 1 || echo "⚠ Веб-панель не отвечает"
-
-echo ""
 echo "========================================"
 echo "✓ Установка завершена!"
 echo "========================================"
 echo ""
-echo "Доступ к панели администратора:"
-echo "  URL: http://31.28.27.96/vpn-admin"
-echo "  Логин: admin"
-echo "  Пароль: (установленный при настройке Apache)"
+echo "Подключение клиентов:"
 echo ""
-echo "Панель управления WireGuard:"
-echo "  Пароль: 9334138"
+echo "1. Для мобильных (QR-код):"
+echo "   docker exec wireguard cat /config/peer_phone-grisha/peer_phone-grisha.conf | qrencode -t ansiutf8"
+echo ""
+echo "2. Для десктопа (файл конфигурации):"
+echo "   scp root@31.28.27.96:/opt/vpn/config/peer_laptop-grisha/peer_laptop-grisha.conf ."
 echo ""
 echo "Полезные команды:"
-echo "  docker ps                    - статус контейнеров"
-echo "  docker logs wg-easy          - логи WireGuard"
+echo "  docker ps                           - статус контейнеров"
+echo "  docker logs wireguard               - логи WireGuard"
+echo "  docker logs -f wireguard            - логи в реальном времени"
 echo "  docker compose -f /opt/vpn/docker-compose.yml restart"
-echo "                               - перезапуск VPN"
+echo "                                      - перезапуск VPN"
+echo "  docker exec wireguard wg show       - статус подключений"
 echo ""

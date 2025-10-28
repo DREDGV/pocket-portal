@@ -5,6 +5,11 @@
 # Конфигурация WireGuard (содержит приватные ключи!)
 config/
 
+# Client configs and QR codes (DO NOT COMMIT)
+*.conf
+*-qr.png
+.env
+
 # Apache credentials
 .htpasswd*
 
